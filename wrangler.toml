@@ -1,4 +1,4 @@
-name = "cloudflare-d1-api"
+name = "githubdeploy"
 main = "src/index.js"
 compatibility_date = "2023-10-02"
 
