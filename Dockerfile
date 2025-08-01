@@ -2,7 +2,10 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Install Wrangler CLI globally
+# Install necessary build tools and dependencies
+RUN apk add --no-cache python3 make g++ curl
+
+# Install Wrangler CLI globally with platform-specific binaries
 RUN npm install -g wrangler
 
 # Copy package.json and package-lock.json
@@ -14,10 +17,8 @@ RUN npm install
 # Copy the rest of the application
 COPY . .
 
-# Set environment variables for Cloudflare authentication
-# These will be provided at runtime via Docker environment variables
-ENV CLOUDFLARE_API_TOKEN=""
-ENV CLOUDFLARE_ACCOUNT_ID=""
+# Environment variables for Cloudflare authentication will be passed at runtime
+# DO NOT set default values for sensitive information in the Dockerfile
 
 # Default command - can be overridden at runtime
 CMD ["npm", "run", "deploy:production"]

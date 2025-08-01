@@ -16,8 +16,9 @@ port = 8787
 [build]
 command = "echo 'Building worker'"
 
-[triggers]
-cron = []
+# Uncomment and configure if you need cron triggers
+# [triggers]
+# crons = []
 
 # Production environment configuration
 [env.production]
