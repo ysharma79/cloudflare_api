@@ -1,0 +1,32 @@
+name = "cloudflare-d1-api"
+main = "src/index.js"
+compatibility_date = "2023-10-02"
+
+# Default environment (development)
+# D1 Database configuration
+[[d1_databases]]
+binding = "DB" # DB will be available in your Worker on env.DB
+database_name = "cloudflare-d1-api-db"
+database_id = "e431872e-4572-43c3-8127-fd1d14f4329c"
+
+[dev]
+port = 8787
+
+# Ensure migrations are applied
+[build]
+command = "echo 'Building worker'"
+
+[triggers]
+cron = []
+
+# Production environment configuration
+[env.production]
+name = "cloudflare-d1-api-production"
+# route = "api.yourdomain.com/*" # Uncomment and replace with your actual domain when ready
+
+# Production D1 Database configuration
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "cloudflare-d1-api-db-production"
+database_id = "8e20d5f6-f6b6-4f17-99bc-7f30daf764cc" # Production database ID
+migrations_dir = "migrations"

@@ -1,0 +1,28 @@
+services:
+  # Development service - for local testing
+  cloudflare-api-dev:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8787:8787"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+
+  # Production deployment service
+  cloudflare-api-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      no_cache: true
+    environment:
+      - NODE_ENV=production
+      # These will need to be set in a .env file or passed at runtime
+      - CLOUDFLARE_API_TOKEN=${CLOUDFLARE_API_TOKEN}
+      - CLOUDFLARE_ACCOUNT_ID=${CLOUDFLARE_ACCOUNT_ID}
+    # No ports or volumes needed for production deployment
+    command: npm run deploy:production
