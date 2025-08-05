@@ -173,6 +173,40 @@ router.post('/items', async (request, env) => {
   }
 });
 
+// API Documentation endpoint
+router.get('/api/docs', () => {
+  const docs = {
+    api: 'HumanizeIQ API',
+    version: '1.0.0',
+    endpoints: [
+      {
+        path: '/items',
+        method: 'GET',
+        description: 'Get all items',
+        response: { success: true, items: [] }
+      },
+      {
+        path: '/items/:id',
+        method: 'GET',
+        description: 'Get a specific item by ID',
+        response: { success: true, item: {} }
+      },
+      {
+        path: '/items',
+        method: 'POST',
+        description: 'Create a new item',
+        requestBody: { name: 'string (required)', description: 'string (optional)' },
+        response: { success: true, item: {} }
+      }
+    ]
+  };
+
+  return new Response(JSON.stringify(docs, null, 2), {
+    headers: { 'Content-Type': 'application/json' },
+    status: 200
+  });
+});
+
 // 404 for everything else
 router.all('*', () => new Response('Not Found', { status: 404 }));
 
